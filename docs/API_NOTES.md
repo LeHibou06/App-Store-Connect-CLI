@@ -205,6 +205,9 @@ the App Store Connect web-client source captured for issue #2299:
   upload attachments and never retry an uncertain mutation or post-read
   verification. No disposable live thread/draft fixture was available, so
   Apple provider acceptance of these writes remains unverified.
+- A draft read response without `data` is malformed, not proof of absence.
+  Create refuses it before writing; delete cannot report verified success
+  from it. Only explicit `data: null` or a relationship 404 means no draft.
 
 ## Web-session app distribution method
 
