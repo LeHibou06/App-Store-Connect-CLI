@@ -148,9 +148,10 @@ account. The imported session becomes the last cached session.
 Use `--from-env` to read the same versioned `asc-web-session` JSON bundle from
 the fixed `ASC_WEB_SESSION` variable when a CI secret store provides
 environment input. The flag is explicit and mutually exclusive with `--file`;
-an environment value is ignored by other commands and by import unless the
-flag is present. Raw cookie headers, opaque tokens, provider values, CSRF
-values, and other environment variables are not accepted. The import receipt's
+an environment value is ignored unless `--from-env` or the explicitly scoped
+`--experimental-web-session` mode below is present. Raw cookie headers, opaque
+tokens, provider values, CSRF values, and other environment variables are not
+accepted. The import receipt's
 `path` is the fixed `ASC_WEB_SESSION` source marker in this mode. Environment
 values use the same versioned bundle schema and 1 MiB parser ceiling. Process
 launchers and operating systems can impose lower per-value or total-environment
@@ -172,6 +173,48 @@ belongs to the named account or remains accepted by Apple.
 Isolate tests and automation with `ASC_WEB_SESSION_CACHE_DIR` and
 `ASC_WEB_SESSION_CACHE_BACKEND=file`. An unset or `auto` backend still falls
 back to the keychain when the file cache is empty.
+
+### Temporary environment sessions [experimental]
+
+For a read that must not persist credentials, supply the canonical bundle through
+`ASC_WEB_SESSION` and place `--experimental-web-session` before the command:
+
+```bash
+asc --experimental-web-session web removed-apps list --output json
+asc --experimental-web-session web api-keys list --output json
+asc --experimental-web-session web api-keys view --key-id KEY_ID --output json
+```
+
+These are the complete supported command set. Other commands, including command
+groups, reject the mode with exit code `2` before reading credentials or contacting
+Apple. Explicit `--help` and the root `--version` flag remain local actions. This
+flag never substitutes cookies for public API-key authentication. Without the
+flag, existing cached-session behavior and explicit import remain unchanged.
+
+The value must be the same versioned `asc-web-session` JSON bundle accepted by
+`web auth import --from-env`, with the same 1 MiB ceiling and operating-system
+environment limits. It is not a raw cookie header or an opaque token. The CLI
+validates a temporary cookie jar with Apple's session endpoint and requires the
+returned Apple Account to match the bundle before making the requested read.
+`--apple-id`, when supplied, must also match the bundle. Invalid input returns
+exit code `2`; failed live validation returns a runtime error without executing
+the read. There is no web-session cache or keychain access, login, 2FA, automatic
+reauthentication, or session persistence in this mode. Supply a fresh canonical
+bundle if validation fails.
+
+The read uses the provider already selected in Apple's session response. Provider
+switching is unsupported: `--provider-id` and `--public-provider-id` are rejected,
+even when explicitly passed an empty or zero value. `--two-factor-code-command`
+is also rejected. Nonempty `ASC_WEB_SESSION_PROVIDER` and `ASC_WEB_SESSION_CSRF`
+values are rejected without echoing their contents. Required Iris headers remain
+owned by the existing endpoint clients; this mode does not accept or inject CSRF
+tokens and does not support Developer Portal commands.
+
+Treat the environment bundle as a password: use your CI secret store, mask the
+value, and disable shell tracing. Session material is not printed, including in
+`--api-debug` output. Command output retains its existing format and may contain
+private app or API-key metadata; key material is never printed. For the full
+cached web workflow, use the existing explicit import commands instead.
 
 ### `asc web agreements`
 

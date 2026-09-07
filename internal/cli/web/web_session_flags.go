@@ -44,6 +44,11 @@ func newWebRequestContext(ctx context.Context) (context.Context, context.CancelF
 // a request context whose timeout starts only once authentication is done; the
 // returned cancel func is never nil, so it is safe to defer before checking err.
 func resolveWebSessionForCommand(ctx context.Context, flags webSessionFlags) (*webcore.AuthSession, context.Context, context.CancelFunc, error) {
+	if ephemeral, _ := ctx.Value(ephemeralSessionContextKey{}).(bool); ephemeral {
+		session, err := resolveEphemeralWebSession(ctx, *flags.appleID)
+		requestCtx, cancel := newWebRequestContext(ctx)
+		return session, requestCtx, cancel, err
+	}
 	selection := providerSelectionFromFlags(flags)
 	session, _, err := callResolveSessionForProviderSelection(
 		ctx,
