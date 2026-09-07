@@ -264,6 +264,11 @@
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4a/7f/ae/4a7faef1-a45e-75d7-d90a-066eda390ea4/AppIcon-0-0-1x_U007emarketing-0-8-0-0-85-220.png/512x512bb.jpg"
   },
   {
+    "app": "Comer en Asturias",
+    "link": "https://apps.apple.com/us/app/comer-en-asturias/id6802125809?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/7e/b1/18/7eb118c2-0cfb-c083-839e-cc896b31577c/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
     "app": "Concert Memories 2: Countdown",
     "link": "https://apps.apple.com/us/app/concert-memories-2-countdown/id6744301154?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/6c/ce/a1/6ccea161-6da4-52c7-1260-f44955b0bc70/ConcertMemories2-0-0-1x_U007epad-0-1-0-sRGB-85-220.png/512x512bb.jpg"
@@ -1234,6 +1239,11 @@
     "app": "Pocket Mole Watch",
     "link": "https://apps.apple.com/us/app/pocket-mole-watch/id6766255492?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/89/bd/10/89bd10b6-2a9a-4292-2eaf-16948b018a7a/AppIcon-0-0-1x_U007emarketing-0-11-85-220.png/512x512bb.jpg"
+  },
+  {
+    "app": "Podcast App & Player - Skimr",
+    "link": "https://apps.apple.com/us/app/podcast-app-player-skimr/id6744159946?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/90/e4/3d/90e43d21-87d6-fca6-4e77-749af812e0fb/AppIcon-0-0-1x_U007ephone-0-1-0-85-220.png/512x512bb.jpg"
   },
   {
     "app": "PodSized: AI Podcast Summaries",
