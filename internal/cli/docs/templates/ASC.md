@@ -209,6 +209,7 @@ Use `asc <command> --help` for subcommands and flags.
 
 - `--api-debug` - HTTP request/response logging (redacted)
 - `--debug` - Debug logging
+- `--experimental-web-session` - Use canonical ASC_WEB_SESSION in memory for web removed-apps list and web api-keys list/view only
 - `--profile` - Use a named authentication profile
 - `--report` - Report format for CI output
 - `--report-file` - Path to write CI report file
