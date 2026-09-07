@@ -42,10 +42,10 @@ asc install-skills
 ```
 
 `asc install-skills` checks out reviewed commit
-`e30039abddbe388179324d0f9cdccb66c3843115` and copies its 23 skills directly
+`f52c4f04323bb2dfb21ca8be82e6494e9cd0b4d8` and copies its 25 skills directly
 into the standard global agent-skills directory. It verifies the complete pack
 and every installed file before succeeding, preserves unrelated skills and
-unrelated lock entries, and pins the 23 ASC lock entries to the same reviewed
+unrelated lock entries, and pins the 25 ASC lock entries to the same reviewed
 commit so external checks cannot update them from a mutable branch. It rolls
 back the pack if any replacement fails. Only
 `git` is required; the command does not execute Node.js, `npx`, an npm package,
