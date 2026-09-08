@@ -71,7 +71,7 @@ Validate attributes against the exact create or update request schema. Validate 
 - Within a worktree, wait for each focused test to finish before starting a broad gate. Record the checked commit, relevant working-tree state, command, and environment. Reuse passing checks while their inputs remain unchanged, including during status-only follow-ups. Rerun affected checks when source, test inputs, commands, environment, toolchain, or requested verification changes; unrelated temporary files do not invalidate results. Complete every required gate for the final change, and preserve the separate full-branch review requirement after any diff change.
 - Run host-intensive gates concurrently only when explicitly required. Assign each gate a CPU budget and keep the sum of concurrent gate budgets within the host's logical CPU count; tool flags are limits within a gate, not values to add together. Avoid multiplying Go package and in-binary concurrency: for a budget of `B`, use `GOMAXPROCS=1 go test -p=B -parallel=1 ./...` for package fan-out or `GOMAXPROCS=B go test -p=1 -parallel=B ./...` for one package at a time. Use `golangci-lint run --concurrency=B ./...` for a linter gate.
 
-User-facing commands and flags follow `experimental` -> `stable` -> `deprecated` -> `removed`. Do not delete stable behavior directly. Deprecations require warning text, transition tests, migration guidance, and a release-note entry.
+User-facing commands and flags are stable until deprecated or removed. Do not delete stable behavior directly. Deprecations require warning text, transition tests, migration guidance, and a release-note entry.
 
 ## Implementation invariants
 

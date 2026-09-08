@@ -28,17 +28,17 @@ asc web apps delete --app "1234567890" --dry-run
 asc web app-groups create --name "My App Shared" --identifier "group.com.example.app.shared" --confirm
 asc web app-groups list --output table
 
-# [experimental] List and inspect Developer Portal Bundle IDs unavailable through the public API
+# List and inspect Developer Portal Bundle IDs unavailable through the public API
 asc web bundle-ids list --output table
 asc web bundle-ids view --bundle-id "BUNDLE_RESOURCE_ID" --output json
 
-# [experimental] List Developer Portal Website Push IDs unavailable through the public API
+# List Developer Portal Website Push IDs unavailable through the public API
 asc web website-push-ids list --output table
 
-# [experimental] Generate and download a Transaction Tax Report through the web session
+# Generate and download a Transaction Tax Report through the web session
 asc web finance transaction-tax download --date 2026-07 --output-path ./transaction-tax-2026-07.zip --output json
 
-# [experimental] Inspect an In-App Purchase tax category
+# Inspect an In-App Purchase tax category
 asc web iap tax-category list --output json
 asc web iap tax-category view --iap "IAP_ID" --output json
 asc web iap tax-category set --iap "IAP_ID" --category "CATEGORY_ID" --confirm
@@ -89,8 +89,8 @@ Common session commands:
 * `asc web auth login` - create or refresh the cached web session
 * `asc web auth status` - inspect whether the current session is usable
 * `asc web auth capabilities` - inspect web-visible API key roles and capabilities
-* `asc web auth export` [experimental] - write the cached session to a portable bundle file
-* `asc web auth import` [experimental] - load a session bundle into the cache
+* `asc web auth export` - write the cached session to a portable bundle file
+* `asc web auth import` - load a session bundle into the cache
 * `asc web auth logout` - clear the cached web session
 
 ## Command families
@@ -106,8 +106,8 @@ Available commands:
   selected App Store Connect provider and any persisted Developer Portal team ID
   (`developerTeamId`)
 * `asc web auth capabilities` - inspect web-visible capability metadata
-* `asc web auth export` [experimental] - write the cached session to a portable bundle file
-* `asc web auth import` [experimental] - load a session bundle into the cache
+* `asc web auth export` - write the cached session to a portable bundle file
+* `asc web auth import` - load a session bundle into the cache
 * `asc web auth logout` - clear the cached web session
 
 During an interactive trusted-device challenge, `asc` shows a phone-code
@@ -116,7 +116,7 @@ trusted-device code once; Apple then delivers the phone verification code by
 its configured method (including SMS) and `asc` prompts again. Automated flows
 rerun the configured `--two-factor-code-command` after phone fallback.
 
-#### [experimental] Moving a session to another machine or to CI
+#### Moving a session to another machine or to CI
 
 `asc web auth export` writes the cached session to a JSON bundle, and
 `asc web auth import` loads that bundle into the cache `asc web auth login`
@@ -174,7 +174,7 @@ Isolate tests and automation with `ASC_WEB_SESSION_CACHE_DIR` and
 `ASC_WEB_SESSION_CACHE_BACKEND=file`. An unset or `auto` backend still falls
 back to the keychain when the file cache is empty.
 
-### Temporary environment sessions [experimental]
+### Temporary environment sessions
 
 For a read that must not persist credentials, supply the canonical bundle through
 `ASC_WEB_SESSION` and place `--experimental-web-session` before the command:
@@ -219,8 +219,8 @@ cached web workflow, use the existing explicit import commands instead.
 ### `asc web agreements`
 
 Check, download, and accept Apple Developer Program agreements through Apple
-web-session endpoints. This command is experimental. The public App Store
-Connect API has no endpoint for these agreements.
+web-session endpoints. The public App Store Connect API has no endpoint for
+these agreements.
 
 Available commands:
 
@@ -269,7 +269,7 @@ Tax report generation.
 
 Available commands:
 
-* `asc web finance transaction-tax download` - [experimental] generate and download one eligible Transaction Tax Report archive
+* `asc web finance transaction-tax download` - generate and download one eligible Transaction Tax Report archive
 
 The command reads the selected month and the finance page's region-currency
 model, then makes one generation request, polls the generated job until Apple
@@ -293,7 +293,7 @@ asc web finance transaction-tax download \
 
 ### `asc web iap`
 
-[experimental] Read and manage an In-App Purchase tax category through an
+Read and manage an In-App Purchase tax category through an
 authenticated App Store Connect web session. The public App Store Connect API
 does not expose this resource.
 
@@ -346,7 +346,7 @@ asc web iap tax-category set \
 asc web iap tax-category reset --iap "IAP_ID" --confirm --output json
 ```
 
-The endpoint is an experimental private web-session contract. A browser
+The endpoint is a private web-session contract. A browser
 canary verified catalog discovery, create, update, condition clearing, and
 delete/readback against disposable app `6759231657` and IAP `6760268101` on
 2026-09-06; the disposable IAP was restored and no temporary resources were
@@ -479,7 +479,7 @@ asc web apps transfer status --app APP_ID
 asc web apps transfer status --app APP_ID --output json
 ```
 
-This experimental command uses `GET /iris/v1/apps/{appId}?include=appTransferRequest`.
+This command uses `GET /iris/v1/apps/{appId}?include=appTransferRequest`.
 JSON preserves Apple's complete app response, including the relationship, any
 included transfer resource, links, and unknown fields. Table and Markdown output
 show request presence (`none`, `present`, or `unknown`), the transfer ID, and the
@@ -554,16 +554,14 @@ capabilities, and App Clip capability sync.
 
 Available commands:
 
-* `asc web bundle-ids list` - [experimental] list the captured iOS and Mac Bundle ID collection for the selected Developer team
-* `asc web bundle-ids view` - [experimental] inspect one opaque Bundle ID and its included capability graph
+* `asc web bundle-ids list` - list the captured iOS and Mac Bundle ID collection for the selected Developer team
+* `asc web bundle-ids view` - inspect one opaque Bundle ID and its included capability graph
 * `asc web bundle-ids capabilities enable` - enable a Developer Portal-only Bundle ID capability
 * `asc web bundle-ids capabilities disable` - disable a Developer Portal-only Bundle ID capability
 * `asc web bundle-ids capabilities sync-app-clip` - sync an App Clip capability with its parent Bundle ID
 
-Only the `list` and `view` read leaves are experimental. The existing
-`capabilities` commands retain their established stability. The read commands
-use the cookie-authenticated Developer Portal JSON:API
-service, not the public App Store Connect API. The `view` detail request uses
+The `list` and `view` read leaves use the cookie-authenticated Developer Portal
+JSON:API service, not the public App Store Connect API. The `view` detail request uses
 `X-HTTP-Method-Override: GET` on Apple's POST endpoint. `list` requests the first
 1000-resource iOS/Mac collection and does not expose pagination; if Apple
 returns `links.next`, it remains visible in JSON for a later slice and table or
@@ -625,7 +623,7 @@ asc web bundle-ids capabilities sync-app-clip \
 
 ### `asc web service-ids`
 
-[experimental] Manage Services IDs through a Developer Portal web session. These resources use `platform=SERVICES` and are distinct from public App Store Connect Bundle IDs.
+Manage Services IDs through a Developer Portal web session. These resources use `platform=SERVICES` and are distinct from public App Store Connect Bundle IDs.
 
 Available commands:
 
@@ -640,18 +638,18 @@ Use `--service-id SERVICE_RESOURCE_ID` for `view`, `rename`, and `delete`. Creat
 ### `asc web website-push-ids`
 
 Read and manage Website Push IDs through the Developer Portal web session. The
-current slice is experimental and uses the captured legacy list plus the
+commands use the captured legacy list plus the
 modern JSON:API view/create/delete operations.
 
 Available commands:
 
-* `asc web website-push-ids list` - [experimental] list the first captured
+* `asc web website-push-ids list` - list the first captured
   Website Push ID page for the selected Developer team
-* `asc web website-push-ids view` - [experimental] inspect one modern Website
+* `asc web website-push-ids view` - inspect one modern Website
   Push ID resource and its capability relationship
-* `asc web website-push-ids create` - [experimental] register a Website Push
+* `asc web website-push-ids create` - register a Website Push
   ID with an explicitly empty capability relationship; requires `--confirm`
-* `asc web website-push-ids delete` - [experimental] delete one resource after
+* `asc web website-push-ids delete` - delete one resource after
   empty-capability and postcondition checks; requires `--confirm`
 
 `list` posts to Apple's legacy
@@ -820,10 +818,10 @@ Available commands:
 * `asc web review list` - list review submissions for an app
 * `asc web review show` - inspect one submission and related messages/screenshots, including app-scoped Resolution Center threads the selected submission does not cover
 * `asc web review threads` - list every Resolution Center thread on an app, including binary, metadata, and informational threads; `--drafts` reads each unsent draft (`--plain-text` projects HTML to plain text)
-* [experimental] `asc web review drafts` - create, update, or delete one unsent Resolution Center draft
+* `asc web review drafts` - create, update, or delete one unsent Resolution Center draft
 * `asc web review subscriptions` - inspect and mutate next-version subscription review selection
 * `asc web review iaps` - attach a non-renewing IAP to the next app version review
-* [experimental] `asc web review reply` - send one confirmed Resolution Center text reply
+* `asc web review reply` - send one confirmed Resolution Center text reply
 
 Subscription JSON includes both `submitWithNextAppStoreVersion` and
 `submitWithNextAppStoreVersionKnown`. When the presence field is `false`, Apple
@@ -838,7 +836,7 @@ asc web review iaps attach --app "123456789" --iap-id "PRODUCT_ID" --confirm
 
 `asc web review reply --thread-id THREAD_ID --message MESSAGE --confirm` creates a draft, sends it, and re-reads the thread to verify the resulting message. Attachments are unsupported, and an uncertain send is never retried automatically.
 
-The experimental draft commands keep a draft unsent:
+The draft commands keep a draft unsent:
 
 ```bash  theme={null}
 asc web review drafts create --app "123456789" --thread-id "THREAD_ID" --message "We updated the demo account." --confirm
@@ -966,7 +964,7 @@ Available command groups:
 * `asc web xcode-cloud env-vars` - manage shared and workflow-scoped environment variables
 * `asc web xcode-cloud settings` - inspect product settings, change the next build number, and manage custom version aliases
 
-The experimental SCM commands inspect provider connections through the web session:
+The SCM commands inspect provider connections through the web session:
 
 ```bash
 asc web xcode-cloud scm providers list --output json

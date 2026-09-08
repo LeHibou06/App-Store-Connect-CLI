@@ -24,7 +24,7 @@ asc testflight groups create --app APP_ID --name "Internal Testers" --internal
 asc testflight groups view --id GROUP_ID
 ```
 
-The experimental collection surface also supports exact ID and public-link filters:
+The collection surface also supports exact ID and public-link filters:
 
 ```bash  theme={null}
 asc testflight groups list --global --id GROUP_ID
@@ -33,15 +33,15 @@ asc testflight groups list --global --public-link-limit-enabled false
 asc testflight groups list --global --public-link PUBLIC_LINK
 ```
 
-Use experimental `--include` with `--fields`, `--app-fields`, `--build-fields`,
+Use `--include` with `--fields`, `--app-fields`, `--build-fields`,
 `--tester-fields`, and `--recruitment-criteria-fields` to control related
 resources. `--testers-limit` and `--builds-limit` cap included relationship
 results. Query-shaping flags cannot be combined with `--next`, because the
 continuation URL already contains the original query.
 
-### Find the groups that contain a build (experimental)
+### Find the groups that contain a build
 
-The `--build-id` lookup is experimental. Use an App Store Connect build ID to
+Use an App Store Connect build ID to
 list explicit group membership and implicit access from groups configured for
 all builds:
 
@@ -88,7 +88,7 @@ asc testflight testers groups list --id TESTER_ID
 asc testflight testers add-groups --id TESTER_ID --group GROUP_ID
 ```
 
-The `--invite-type`, `--sort`, and `--include` flags are experimental. `--sort`
+The `--invite-type`, `--sort`, and `--include` flags are supported. `--sort`
 accepts `firstName`, `lastName`, `email`, `inviteType`, or `state`; prefix the
 field with `-` for descending order.
 

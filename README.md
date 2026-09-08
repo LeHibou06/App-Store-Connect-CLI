@@ -161,14 +161,10 @@ And explicit flags always win:
 asc apps list --output json
 ```
 
-### Stability labels
+### Compatibility
 
-`asc` uses visible lifecycle labels so you can judge support expectations before
-depending on a command in CI or scripts:
-
-- No label: stable public CLI contract for normal use
-- `[experimental]`: useful, but still evolving; expect sharper edges and faster iteration
-- `DEPRECATED:` or deprecation warnings: compatibility path kept during migration, but not the long-term home
+Commands are supported as documented. Deprecation warnings identify the
+available migration path and the command's long-term replacement.
 
 ## Troubleshooting
 
@@ -195,7 +191,7 @@ depending on a command in CI or scripts:
 
 ### Apple service health
 
-- `[experimental]` Check Apple's developer services without credentials: `asc system-status`
+- Check Apple's developer services without credentials: `asc system-status`
 - Narrow unexpected API or upload failures: `asc system-status --service "App Store Connect"`
 - Poll only when requested: `asc system-status --watch --poll-interval 30s`
 - Use `--issues-only` for a concise incident view; summary counts still cover all matched services
@@ -321,7 +317,7 @@ asc validate --app "123456789" --version "1.2.3" --output json
 asc validate --app "123456789" --version "1.2.3" --strict
 ```
 
-Add the experimental `--deep` mode when a release needs checks that Apple
+Add the `--deep` mode when a release needs checks that Apple
 exposes only through its signed-in web app:
 
 ```bash
@@ -388,7 +384,7 @@ asc screenshots upload --version-localization "VERSION_LOCALIZATION_ID" --path "
 from `data[].id`, not the locale code from `attributes.locale`.
 
 For local capture coverage across multiple devices, locales, appearances, and
-content fixtures, use an experimental matrix plan. Targets must already be
+content fixtures, use a matrix plan. Targets must already be
 booted simulators; the command writes raw artifacts and an offline review
 report, without uploading to App Store Connect:
 
@@ -435,7 +431,7 @@ and `ExportOptions.plist` that use `asc builds next-build-number`,
 Add `--submit --confirm` when
 distributing to an external TestFlight group that needs beta app review submission.
 
-The experimental `asc xcode test` command provides local unit/UI test execution
+The `asc xcode test` command provides local unit/UI test execution
 with structured results and preserved `.xcresult` bundles; see the same workflow
 guide for an invocation.
 
