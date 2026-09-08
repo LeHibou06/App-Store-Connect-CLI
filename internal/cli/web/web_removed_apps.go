@@ -59,7 +59,7 @@ Examples:
 func WebRemovedAppsListCommand() *ffcli.Command {
 	fs := flag.NewFlagSet("web removed-apps list", flag.ExitOnError)
 
-	authFlags := bindWebSessionFlags(fs)
+	authFlags := bindWebSessionFlagsWithSessionFromEnv(fs)
 	limit := fs.Int("limit", webcore.DefaultRemovedAppsLimit, fmt.Sprintf("Maximum results per page (1-%d)", webcore.MaxRemovedAppsLimit))
 	next := fs.String("next", "", "Fetch next page using a links.next URL")
 	paginate := fs.Bool("paginate", false, "Automatically fetch all pages (aggregate results)")
@@ -72,8 +72,13 @@ func WebRemovedAppsListCommand() *ffcli.Command {
 		LongHelp: `List apps from App Store Connect's Removed Apps status view using the
 Apple web-session API.
 
+By default, this command uses the cached web session. Pass --session-from-env
+to use ASC_WEB_SESSION in memory without persistence. This mode does not read
+or write the session cache or keychain.
+
 Examples:
   asc web removed-apps list
+  asc web removed-apps list --session-from-env --output json
   asc web removed-apps list --limit 25 --output table
   asc web removed-apps list --paginate --output json
   asc web removed-apps list --next "<links.next>"`,

@@ -15,8 +15,6 @@ func TestCommandHelpUsesPlainDescriptions(t *testing.T) {
 	var visit func(*ffcli.Command, string)
 	visit = func(command *ffcli.Command, path string) {
 		check := func(kind, help string) {
-			// The existing session option is moved in a separate change.
-			help = strings.ReplaceAll(help, "--experimental-web-session", "")
 			if strings.Contains(strings.ToLower(help), "experimental") {
 				t.Errorf("%s %s contains a lifecycle label: %q", path, kind, help)
 			}
