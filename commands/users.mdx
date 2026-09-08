@@ -44,12 +44,12 @@ asc users list --paginate
 
 * `--email` - Filter by email/username
 * `--role` - Filter by role (comma-separated): `ADMIN`, `DEVELOPER`, `APP_MANAGER`, etc.
-* `--visible-app` - [experimental] Filter by visible app ID(s), comma-separated
-* `--sort` - [experimental] Sort by one or more comma-separated expressions: `username`, `-username`, `lastName`, or `-lastName`
-* `--fields` - [experimental] User fields to include: `username`, `firstName`, `lastName`, `roles`, `allAppsVisible`, `provisioningAllowed`, `visibleApps`
-* `--app-fields` - [experimental] Fields to include for related apps (requires `--include visibleApps`)
-* `--include` - [experimental] Include related resources: `visibleApps`
-* `--visible-apps-limit` - [experimental] Maximum included visible apps (1-50; requires `--include visibleApps`)
+* `--visible-app` - Filter by visible app ID(s), comma-separated
+* `--sort` - Sort by one or more comma-separated expressions: `username`, `-username`, `lastName`, or `-lastName`
+* `--fields` - User fields to include: `username`, `firstName`, `lastName`, `roles`, `allAppsVisible`, `provisioningAllowed`, `visibleApps`
+* `--app-fields` - Fields to include for related apps (requires `--include visibleApps`)
+* `--include` - Include related resources: `visibleApps`
+* `--visible-apps-limit` - Maximum included visible apps (1-50; requires `--include visibleApps`)
 * `--limit` - Maximum results per page (1-200)
 * `--next` - Fetch next page using a links.next URL
 * `--paginate` - Automatically fetch all pages

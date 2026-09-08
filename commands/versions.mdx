@@ -77,7 +77,7 @@ View details for an app store version.
 In 1.0, the deprecated `asc versions get` alias was removed. Use
 `asc versions view` as the canonical command.
 
-Provide either `--version-id`, or the experimental `--app` and `--version`
+Provide either `--version-id`, or the `--app` and `--version`
 selectors. `--platform` defaults to `IOS` for selector-based lookup.
 Selector lookup first resolves the version ID, then fetches its details. Use
 `--version-id` to retain the single-request path for automation. Conflicting or
@@ -89,15 +89,15 @@ before authentication or API requests.
 </ParamField>
 
 <ParamField path="--app" type="string">
-  **[experimental]** App Store Connect app ID (or `ASC_APP_ID`)
+  App Store Connect app ID (or `ASC_APP_ID`)
 </ParamField>
 
 <ParamField path="--version" type="string">
-  **[experimental]** Version string used with `--app`
+  Version string used with `--app`
 </ParamField>
 
 <ParamField path="--platform" type="string" default="IOS">
-  **[experimental]** Platform used with `--app` and `--version`: `IOS`, `MAC_OS`, `TV_OS`, or `VISION_OS`
+  Platform used with `--app` and `--version`: `IOS`, `MAC_OS`, `TV_OS`, or `VISION_OS`
 </ParamField>
 
 <ParamField path="--include-build" type="boolean" default="false">

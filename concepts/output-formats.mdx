@@ -126,9 +126,7 @@ asc review details-get --id "DETAIL_ID" --output json --include-sensitive
 The flag applies to that one invocation only, defaults to `false`, and has no
 environment-variable equivalent, so a secret can never become visible because
 of ambient configuration. Each use writes a warning to stderr because printed
-secrets persist in shell history, CI logs, and terminal scrollback. The flag
-is currently experimental: its name and placement may still change before it
-becomes stable.
+secrets persist in shell history, CI logs, and terminal scrollback.
 
 <Warning>
   Before this change, `demoAccountPassword` was emitted verbatim in JSON output,

@@ -23,9 +23,9 @@ Apple code signing has four separate pieces:
 | Re-encrypt the repository with a replacement password | `asc signing sync rotate-password --confirm` |
 | Plan profiles for every target in an iOS archive and an exact device set | `asc signing reconcile plan` |
 | Apply an approved reconciliation plan | `asc signing reconcile apply --confirm` |
-| Re-sign an existing IPA (experimental) | `asc signing resign` |
+| Re-sign an existing IPA | `asc signing resign` |
 | Run one release-testing command with a temporary keychain | `asc signing run` |
-| Keep one identity in a new dedicated keychain (experimental) | `asc signing keychain install --confirm` |
+| Keep one identity in a new dedicated keychain | `asc signing keychain install --confirm` |
 
 Use `fetch` when the matching private key already exists on the machine. Use `sync` when a team or CI worker needs the private identity too. Use `reconcile` for multi-target, registered-device release testing where one stale or incomplete profile can break the whole export.
 
@@ -351,8 +351,6 @@ The normalized PKCS#12 is protected by the same sync password. A pull that repor
 Use `--password-file` for local work. In a secret-managed CI environment, `ASC_SIGNING_SYNC_PASSWORD` is also supported. These are the only password sources; there is no inline password flag.
 
 ### Install a persistent signing keychain
-
-> [experimental] This workflow can change before it reaches stable lifecycle status.
 
 Use `signing run` when an identity should exist only for one child command. Use
 `signing keychain install` when separate archive, export, or CI steps need one
@@ -691,9 +689,9 @@ asc profiles local clean --expired --dry-run
 asc profiles local clean --expired --confirm
 ```
 
-## Re-sign an Existing IPA (Experimental)
+## Re-sign an Existing IPA
 
-`asc signing resign` is an experimental, macOS-only operation. It creates a
+`asc signing resign` is a macOS-only operation. It creates a
 new IPA from an existing archive and never overwrites the input or an existing
 output. Every app-like target, including nested extensions, watch targets,
 and App Clips, must have an explicit profile mapping. Nested Mach-O code such
@@ -711,7 +709,7 @@ asc signing resign \
   --format json
 ```
 
-All command-specific flags are experimental. `--ipa`, `--output`,
+The command-specific flags are `--ipa`, `--output`,
 `--identity`, and `--profiles-manifest` are required;
 `--identity-password-file` is optional. The manifest is strict JSON with no
 unknown or duplicate fields:

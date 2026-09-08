@@ -123,9 +123,9 @@ Examples:
 // WebRemovedAppsRestoreCommand restores a removed app and configures access.
 func WebRemovedAppsRestoreCommand() *ffcli.Command {
 	fs := flag.NewFlagSet("web removed-apps restore", flag.ExitOnError)
-	app := fs.String("app", "", "[experimental] App Store Connect app ID")
-	access := fs.String("access", "", "[experimental] Access mode: limited or full")
-	confirm := fs.Bool("confirm", false, "[experimental] Confirm restoring this app (required)")
+	app := fs.String("app", "", "App Store Connect app ID")
+	access := fs.String("access", "", "Access mode: limited or full")
+	confirm := fs.Bool("confirm", false, "Confirm restoring this app (required)")
 	authFlags := bindWebSessionFlags(fs)
 	output := shared.BindOutputFlags(fs)
 	return &ffcli.Command{

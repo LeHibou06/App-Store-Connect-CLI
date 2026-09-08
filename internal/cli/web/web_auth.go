@@ -1191,8 +1191,6 @@ Provider selection:
   - --public-provider-id selects the public App Store Connect provider/team ID
   - --provider-id selects Apple's numeric App Store Connect provider ID
 
-
-
 Examples:
   asc web auth login --apple-id "user@example.com"
   asc web auth login --apple-id "user@example.com" --public-provider-id "Z4N6A5FQKW"
@@ -1309,8 +1307,8 @@ func WebAuthLogoutCommand() *ffcli.Command {
 
 	appleID := fs.String("apple-id", "", "Apple Account email to remove from cache")
 	all := fs.Bool("all", false, "Remove all cached web sessions")
-	forgetPassword := fs.Bool("forget-password", false, "[experimental] Also remove the saved Apple Account password")
-	confirm := fs.Bool("confirm", false, "[experimental] Confirm removal of saved password credentials")
+	forgetPassword := fs.Bool("forget-password", false, "Also remove the saved Apple Account password")
+	confirm := fs.Bool("confirm", false, "Confirm removal of saved password credentials")
 
 	return &ffcli.Command{
 		Name:       "logout",

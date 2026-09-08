@@ -101,7 +101,7 @@ asc xcode-cloud workflows delete --id "WORKFLOW_ID" --confirm
 * `repository` - Get the repository for a workflow
 * `create` - Create a workflow
 * `update` - Update a workflow
-* `duplicate` - **[experimental]** Duplicate a workflow under a new name
+* `duplicate` - Duplicate a workflow under a new name
 * `delete` - Delete a workflow
 
 **Flags (list):**
@@ -128,10 +128,10 @@ asc xcode-cloud workflows delete --id "WORKFLOW_ID" --confirm
 
 **Flags (duplicate):**
 
-* `--id` - **[experimental]** Source workflow ID to copy (required)
-* `--name` - **[experimental]** Name for the new workflow (required)
-* `--description` - **[experimental]** Description for the new workflow (default: copied from the source workflow)
-* `--enabled` - **[experimental]** Enable the new workflow immediately; the copy is created disabled by default
+* `--id` - Source workflow ID to copy (required)
+* `--name` - Name for the new workflow (required)
+* `--description` - Description for the new workflow (default: copied from the source workflow)
+* `--enabled` - Enable the new workflow immediately; the copy is created disabled by default
 * `--output` - Output format: `json`, `table`, `markdown`
 * `--pretty` - Pretty-print JSON output
 
@@ -184,13 +184,13 @@ asc xcode-cloud products view --id "PRODUCT_ID"
 **Flags (list):**
 
 * `--app` - App Store Connect app ID, bundle ID, or exact app name (or `ASC_APP_ID`)
-* `--product-type` - **[experimental]** Filter by `APP` or `FRAMEWORK`
-* `--fields` - **[experimental]** Sparse fields for CI products
-* `--app-fields` - **[experimental]** Sparse fields for included apps; requires `--include app`
-* `--bundle-id-fields` - **[experimental]** Sparse fields for included bundle IDs; requires `--include bundleId`
-* `--scm-repository-fields` - **[experimental]** Sparse fields for included SCM repositories; requires `--include primaryRepositories`
-* `--include` - **[experimental]** Include `app`, `bundleId`, or `primaryRepositories`
-* `--primary-repositories-limit` - **[experimental]** Maximum included primary repositories (1-50); requires `--include primaryRepositories`
+* `--product-type` - Filter by `APP` or `FRAMEWORK`
+* `--fields` - Sparse fields for CI products
+* `--app-fields` - Sparse fields for included apps; requires `--include app`
+* `--bundle-id-fields` - Sparse fields for included bundle IDs; requires `--include bundleId`
+* `--scm-repository-fields` - Sparse fields for included SCM repositories; requires `--include primaryRepositories`
+* `--include` - Include `app`, `bundleId`, or `primaryRepositories`
+* `--primary-repositories-limit` - Maximum included primary repositories (1-50); requires `--include primaryRepositories`
 * `--limit` - Maximum results per page (1-200)
 * `--next` - Fetch next page using a links.next URL
 * `--paginate` - Automatically fetch all pages
