@@ -43,7 +43,6 @@ func RootCommand(version string) *ffcli.Command {
 	catalog := registry.NewCatalog(version)
 	root := newRootCommand(version, catalog.All())
 	catalog.SetCompletionRootFlagSet(root.FlagSet)
-	wrapEphemeralSessionCommands(root)
 	return root
 }
 
@@ -67,7 +66,6 @@ func rootCommandForArgs(version string, args []string) *ffcli.Command {
 			break
 		}
 	}
-	wrapEphemeralSessionCommands(root)
 	return root
 }
 
@@ -88,7 +86,6 @@ func newRootCommand(version string, subcommands []*ffcli.Command) *ffcli.Command
 	}
 
 	root.FlagSet.BoolVar(&versionRequested, "version", false, "Print version and exit")
-	root.FlagSet.Bool("experimental-web-session", false, "Use ASC_WEB_SESSION in memory for web removed-apps list and web api-keys list/view")
 	shared.BindRootFlags(root.FlagSet)
 
 	var (

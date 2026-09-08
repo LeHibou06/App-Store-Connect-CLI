@@ -9,8 +9,11 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
+
+	"github.com/peterbourgon/ff/v3/ffcli"
 
 	cmd "github.com/rudrankriyam/App-Store-Connect-CLI/cmd"
 	"github.com/rudrankriyam/App-Store-Connect-CLI/internal/cli/shared"
@@ -76,7 +79,7 @@ func ephemeralSessionFixture(t *testing.T, status int, email string) (*[]string,
 	return &requests, cache
 }
 
-func TestExperimentalWebSessionReadAllowlist(t *testing.T) {
+func TestEnvironmentSessionReadAllowlist(t *testing.T) {
 	for _, tc := range []struct {
 		args, paths []string
 		result      string
@@ -95,8 +98,8 @@ func TestExperimentalWebSessionReadAllowlist(t *testing.T) {
 			})
 			// An unusable cache backend must not prevent ephemeral execution.
 			t.Setenv("ASC_WEB_SESSION_CACHE_BACKEND", "off")
-			args := append([]string{"--experimental-web-session", "--api-debug"}, tc.args...)
-			args = append(args, "--output", "json")
+			args := append([]string{"--api-debug"}, tc.args...)
+			args = append(args, "--session-from-env", "--output", "json")
 			var code int
 			stdout, stderr := captureOutput(t, func() { code = cmd.Run(args, "test") })
 			if code != 0 {
@@ -124,17 +127,17 @@ func assertEphemeralSessionUnchanged(t *testing.T, cache, output string) {
 	}
 }
 
-func TestExperimentalWebSessionRejectsBeforeRequests(t *testing.T) {
+func TestEnvironmentSessionRejectsBeforeRequests(t *testing.T) {
 	for _, tc := range []struct {
 		name                   string
 		args                   []string
 		env, value, diagnostic string
 	}{
-		{"public", []string{"apps", "list"}, "", "", "does not support --experimental-web-session"},
-		{"executable group", []string{"validate", "--app", "app-1", "--version", "1.0"}, "", "", "does not support --experimental-web-session"},
-		{"group", []string{"web", "api-keys"}, "", "", "does not support --experimental-web-session"},
-		{"mutation", []string{"web", "api-keys", "create", "--name", "test"}, "", "", "does not support --experimental-web-session"},
-		{"import", []string{"web", "auth", "import", "--from-env"}, "", "", "does not support --experimental-web-session"},
+		{"public", []string{"apps", "list"}, "", "", "unknown flag `--session-from-env`"},
+		{"executable group", []string{"validate", "--app", "app-1", "--version", "1.0"}, "", "", "unknown flag `--session-from-env`"},
+		{"group", []string{"web", "api-keys"}, "", "", "unknown flag `--session-from-env`"},
+		{"mutation", []string{"web", "api-keys", "create", "--name", "test"}, "", "", "unknown flag `--session-from-env`"},
+		{"import", []string{"web", "auth", "import", "--from-env"}, "", "", "unknown flag `--session-from-env`"},
 		{"missing", []string{"web", "removed-apps", "list"}, "ASC_WEB_SESSION", "", "ASC_WEB_SESSION is unset or empty"},
 		{"invalid", []string{"web", "removed-apps", "list"}, "ASC_WEB_SESSION", "override-secret", "invalid session bundle"},
 		{"unknown credential field", []string{"web", "removed-apps", "list"}, "ASC_WEB_SESSION", strings.Replace(webSessionBundleFixture, `"version": 1,`, `"version": 1, "override-secret": true,`, 1), "invalid session bundle"},
@@ -153,7 +156,7 @@ func TestExperimentalWebSessionRejectsBeforeRequests(t *testing.T) {
 				t.Setenv(tc.env, tc.value)
 			}
 			var code int
-			stdout, stderr := captureOutput(t, func() { code = cmd.Run(append([]string{"--experimental-web-session"}, tc.args...), "test") })
+			stdout, stderr := captureOutput(t, func() { code = cmd.Run(append(tc.args, "--session-from-env"), "test") })
 			if code != 2 || !strings.Contains(stderr, tc.diagnostic) {
 				t.Fatalf("exit=%d stderr=%q", code, stderr)
 			}
@@ -165,7 +168,7 @@ func TestExperimentalWebSessionRejectsBeforeRequests(t *testing.T) {
 	}
 }
 
-func TestExperimentalWebSessionValidationFailure(t *testing.T) {
+func TestEnvironmentSessionValidationFailure(t *testing.T) {
 	for _, tc := range []struct {
 		name   string
 		status int
@@ -176,7 +179,7 @@ func TestExperimentalWebSessionValidationFailure(t *testing.T) {
 		t.Run(tc.name, func(t *testing.T) {
 			requests, cache := ephemeralSessionFixture(t, tc.status, tc.email)
 			var code int
-			stdout, stderr := captureOutput(t, func() { code = cmd.Run([]string{"--experimental-web-session", "web", "removed-apps", "list"}, "test") })
+			stdout, stderr := captureOutput(t, func() { code = cmd.Run([]string{"web", "removed-apps", "list", "--session-from-env"}, "test") })
 			if code == 0 || !strings.Contains(stderr, "session validation failed") {
 				t.Fatalf("exit=%d stderr=%q", code, stderr)
 			}
@@ -188,16 +191,16 @@ func TestExperimentalWebSessionValidationFailure(t *testing.T) {
 	}
 }
 
-func TestExperimentalWebSessionRequiresExplicitOptIn(t *testing.T) {
-	for _, prefix := range [][]string{nil, {"--experimental-web-session=false"}, {"--experimental-web-session", "false"}} {
-		t.Run(strings.Join(prefix, " "), func(t *testing.T) {
+func TestEnvironmentSessionRequiresExplicitOptIn(t *testing.T) {
+	for _, suffix := range [][]string{nil, {"--session-from-env=false"}, {"--session-from-env", "false"}} {
+		t.Run(strings.Join(suffix, " "), func(t *testing.T) {
 			requests, cache := ephemeralSessionFixture(t, 200, "user@example.com")
 			t.Setenv("ASC_WEB_SESSION_CACHE_BACKEND", "off")
 			var code int
 			stdout, stderr := captureOutput(t, func() {
-				code = cmd.Run(append(prefix, "web", "removed-apps", "list"), "test")
+				code = cmd.Run(append([]string{"web", "removed-apps", "list"}, suffix...), "test")
 			})
-			if code == 0 || strings.Contains(stderr, "ephemeral") {
+			if code == 0 {
 				t.Fatalf("implicit session mode: exit=%d stderr=%q", code, stderr)
 			}
 			if len(*requests) != 0 {
@@ -208,24 +211,47 @@ func TestExperimentalWebSessionRequiresExplicitOptIn(t *testing.T) {
 	}
 }
 
-func TestExperimentalWebSessionHelpDoesNotReadCredentials(t *testing.T) {
+func TestEnvironmentSessionHelpDoesNotReadCredentials(t *testing.T) {
 	for _, args := range [][]string{
-		{"--help"}, {"--version"}, {"apps", "list", "--help"}, {"web", "api-keys", "--help"},
+		{"web", "removed-apps", "list"}, {"web", "api-keys", "list"}, {"web", "api-keys", "view"},
 	} {
 		t.Run(strings.Join(args, " "), func(t *testing.T) {
 			requests, cache := ephemeralSessionFixture(t, 200, "user@example.com")
 			t.Setenv("ASC_WEB_SESSION", "override-secret")
 			var code int
 			stdout, stderr := captureOutput(t, func() {
-				code = cmd.Run(append([]string{"--experimental-web-session"}, args...), "test")
+				code = cmd.Run(append(args, "--session-from-env", "--help"), "test")
 			})
 			if code != 0 || stdout == "" {
 				t.Fatalf("exit=%d stdout=%q stderr=%q", code, stdout, stderr)
+			}
+			if !strings.Contains(stdout, "--session-from-env") || !strings.Contains(stdout, "ASC_WEB_SESSION") || !strings.Contains(stdout, "without persistence") {
+				t.Fatalf("help does not explain environment session and persistence: %q", stdout)
 			}
 			if len(*requests) != 0 {
 				t.Fatalf("help requests: %v", *requests)
 			}
 			assertEphemeralSessionUnchanged(t, cache, stdout+stderr)
 		})
+	}
+}
+
+func TestEnvironmentSessionFlagScope(t *testing.T) {
+	var commands []string
+	var visit func(*ffcli.Command, string)
+	visit = func(command *ffcli.Command, path string) {
+		if command.FlagSet != nil && command.FlagSet.Lookup("session-from-env") != nil {
+			commands = append(commands, path)
+		}
+		for _, child := range command.Subcommands {
+			visit(child, path+" "+child.Name)
+		}
+	}
+	root := cmd.RootCommand("test")
+	visit(root, root.Name)
+	sort.Strings(commands)
+	want := []string{"asc web api-keys list", "asc web api-keys view", "asc web removed-apps list"}
+	if !reflect.DeepEqual(commands, want) {
+		t.Fatalf("--session-from-env commands=%v, want %v", commands, want)
 	}
 }

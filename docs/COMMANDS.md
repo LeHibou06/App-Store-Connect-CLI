@@ -25,7 +25,6 @@ asc <subcommand> [flags]
 
 - `--api-debug` - Enable HTTP debug logging to stderr (redacts sensitive values)
 - `--debug` - Enable debug logging to stderr
-- `--experimental-web-session` - Use ASC_WEB_SESSION in memory for web removed-apps list and web api-keys list/view (default: false)
 - `--profile` - Use named authentication profile
 - `--report` - Report format for CI output (e.g., junit)
 - `--report-file` - Path to write CI report file

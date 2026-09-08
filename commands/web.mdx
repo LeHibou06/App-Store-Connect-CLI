@@ -149,7 +149,7 @@ Use `--from-env` to read the same versioned `asc-web-session` JSON bundle from
 the fixed `ASC_WEB_SESSION` variable when a CI secret store provides
 environment input. The flag is explicit and mutually exclusive with `--file`;
 an environment value is ignored unless `--from-env` or the explicitly scoped
-`--experimental-web-session` mode below is present. Raw cookie headers, opaque
+`--session-from-env` mode below is present. Raw cookie headers, opaque
 tokens, provider values, CSRF values, and other environment variables are not
 accepted. The import receipt's
 `path` is the fixed `ASC_WEB_SESSION` source marker in this mode. Environment
@@ -174,22 +174,22 @@ Isolate tests and automation with `ASC_WEB_SESSION_CACHE_DIR` and
 `ASC_WEB_SESSION_CACHE_BACKEND=file`. An unset or `auto` backend still falls
 back to the keychain when the file cache is empty.
 
-### Temporary environment sessions
+### Environment sessions without persistence
 
 For a read that must not persist credentials, supply the canonical bundle through
-`ASC_WEB_SESSION` and place `--experimental-web-session` before the command:
+`ASC_WEB_SESSION` and pass `--session-from-env` to the supported command:
 
 ```bash
-asc --experimental-web-session web removed-apps list --output json
-asc --experimental-web-session web api-keys list --output json
-asc --experimental-web-session web api-keys view --key-id KEY_ID --output json
+asc web removed-apps list --session-from-env --output json
+asc web api-keys list --session-from-env --output json
+asc web api-keys view --key-id KEY_ID --session-from-env --output json
 ```
 
 These are the complete supported command set. Other commands, including command
-groups, reject the mode with exit code `2` before reading credentials or contacting
-Apple. Explicit `--help` and the root `--version` flag remain local actions. This
-flag never substitutes cookies for public API-key authentication. Without the
-flag, existing cached-session behavior and explicit import remain unchanged.
+groups, reject the flag with exit code `2` before reading credentials or contacting
+Apple. This flag never substitutes cookies for public API-key authentication.
+Without the flag, existing cached-session behavior and explicit import remain
+unchanged.
 
 The value must be the same versioned `asc-web-session` JSON bundle accepted by
 `web auth import --from-env`, with the same 1 MiB ceiling and operating-system
