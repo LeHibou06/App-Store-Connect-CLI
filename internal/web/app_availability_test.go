@@ -67,6 +67,11 @@ func TestCreateAppAvailabilityBuildsExpectedRequest(t *testing.T) {
 			return
 		}
 		creates++
+		for name, want := range map[string]string{"Origin": appStoreBaseURL, "Referer": appStoreBaseURL + "/", "X-Requested-With": "XMLHttpRequest"} {
+			if got := r.Header.Get(name); got != want {
+				t.Errorf("%s = %q, want %q", name, got, want)
+			}
+		}
 		var body struct {
 			Data struct {
 				Attributes    map[string]bool `json:"attributes"`

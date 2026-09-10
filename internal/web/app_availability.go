@@ -304,7 +304,13 @@ func (c *Client) CreateAppAvailability(ctx context.Context, attrs AppAvailabilit
 
 	requestBody["included"] = included
 
-	responseBody, err := c.doRequestBase(ctx, c.webIrisV2BaseURL(), http.MethodPost, "/appAvailabilities", requestBody, nil)
+	headers := make(http.Header)
+	headers.Set("Content-Type", "application/json")
+	headers.Set("Accept", "application/json")
+	headers.Set("X-Requested-With", "XMLHttpRequest")
+	headers.Set("Origin", appStoreBaseURL)
+	headers.Set("Referer", appStoreBaseURL+"/")
+	responseBody, err := c.doRequestBase(ctx, c.webIrisV2BaseURL(), http.MethodPost, "/appAvailabilities", requestBody, headers)
 	if err != nil {
 		return nil, err
 	}
