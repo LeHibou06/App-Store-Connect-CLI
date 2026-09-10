@@ -757,6 +757,11 @@
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d3/7d/1c/d37d1c47-8457-7bff-a52f-7c7c90feaa1b/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
+    "app": "Inkpress",
+    "link": "https://apps.apple.com/us/app/inkpress/id6787759999?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d6/32/4e/d6324e8a-b7d9-3ef9-93e9-6ad948ed6081/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
     "app": "Inkput",
     "link": "https://apps.apple.com/app/id6758570182",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/83/e2/68/83e26872-d3d5-ab92-7164-673371673443/AppIcon-0-1x_U007epad-0-1-85-220-0.png/512x512bb.jpg"
@@ -1724,6 +1729,11 @@
     "app": "takt - car glance",
     "link": "https://apps.apple.com/us/app/takt-car-glance/id6799290528?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8f/6a/ae/8f6aaef7-9f39-5dbe-3573-439b29d12f1a/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
+    "app": "Talli",
+    "link": "https://apps.apple.com/us/app/talli/id6782366555?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/63/8e/dd/638edd28-f1d3-5002-d912-7511ff80de7f/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "app": "Tamloot",
