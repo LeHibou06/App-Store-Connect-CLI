@@ -170,6 +170,11 @@
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/f9/73/48/f9734812-afa3-83b4-4862-a9331863f84b/AppIcon-0-0-1x_U007epad-0-0-0-1-0-0-sRGB-85-220.png/512x512bb.jpg"
   },
   {
+    "app": "BrainDrain: 1 Minute Journal",
+    "link": "https://apps.apple.com/us/app/braindrain-1-minute-journal/id6741376368?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/4b/ce/14/4bce140a-0e8c-3c4b-cba1-80288b5878ae/AppIcon-0-0-1x_U007epad-0-1-sRGB-85-220.png/512x512bb.jpg"
+  },
+  {
     "app": "BratVPN",
     "link": "https://apps.apple.com/us/app/bratvpn/id6759875957?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/29/91/b8/2991b84b-72ec-130e-071e-18f6fd175a44/AppIcon-0-0-1x_U007emarketing-0-11-0-85-220.png/512x512bb.jpg"
@@ -317,6 +322,11 @@
     "app": "cubby: stash & track",
     "link": "https://apps.apple.com/us/app/cubby-stash-track/id6759426602?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/77/e6/29/77e6296a-282e-ba85-74d2-93f673233114/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
+    "app": "Curvely",
+    "link": "https://apps.apple.com/us/app/curvely/id6794988370?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/b6/b4/2c/b6b42cc0-44fe-0545-0cac-275ebc6fe8d9/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "app": "CUStats",
@@ -757,6 +767,11 @@
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/d3/7d/1c/d37d1c47-8457-7bff-a52f-7c7c90feaa1b/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
+    "app": "Inkpress",
+    "link": "https://apps.apple.com/us/app/inkpress/id6787759999?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/d6/32/4e/d6324e8a-b7d9-3ef9-93e9-6ad948ed6081/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
     "app": "Inkput",
     "link": "https://apps.apple.com/app/id6758570182",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/83/e2/68/83e26872-d3d5-ab92-7164-673371673443/AppIcon-0-1x_U007epad-0-1-85-220-0.png/512x512bb.jpg"
@@ -855,6 +870,11 @@
     "app": "LilyFM",
     "link": "https://apps.apple.com/app/id6745472149",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/a6/aa/4e/a6aa4ed4-1750-12c4-c206-8b1031c9c95c/AppIcon-0-0-1x_U007ephone-0-1-sRGB-85-220.png/512x512bb.jpg"
+  },
+  {
+    "app": "Litigate",
+    "link": "https://apps.apple.com/us/app/litigate/id6787857503?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/0f/47/13/0f471335-1649-ae5d-6da1-8406c48f5a74/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "app": "LivaLog",
@@ -1721,6 +1741,11 @@
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/8f/6a/ae/8f6aaef7-9f39-5dbe-3573-439b29d12f1a/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
   },
   {
+    "app": "Talli",
+    "link": "https://apps.apple.com/us/app/talli/id6782366555?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/63/8e/dd/638edd28-f1d3-5002-d912-7511ff80de7f/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
+  },
+  {
     "app": "Tamloot",
     "link": "https://apps.apple.com/il/app/tamloot/id6758220887",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/26/a3/f7/26a3f7f9-3cb6-dc8e-fcbd-0fc93630dd4c/AppIcon-0-0-1x_U007ephone-0-1-85-220.png/512x512bb.jpg"
@@ -1964,6 +1989,11 @@
     "app": "WordFlux: Word Puzzles",
     "link": "https://apps.apple.com/us/app/wordflux-word-puzzles/id6757514622?uo=4",
     "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple221/v4/eb/e9/b7/ebe9b79a-9dd1-d0a7-3bd9-ecb2a4517c83/AppIcon-0-0-1x_U007ephone-0-1-0-sRGB-85-220.png/512x512bb.jpg"
+  },
+  {
+    "app": "Wordroot",
+    "link": "https://apps.apple.com/us/app/wordroot/id6794988021?uo=4",
+    "icon": "https://is1-ssl.mzstatic.com/image/thumb/Purple211/v4/4b/9d/f9/4b9df903-d342-3152-ec35-c823dcd86bc6/AppIcon-0-0-1x_U007epad-0-1-85-220.png/512x512bb.jpg"
   },
   {
     "app": "Wozi Vocabulary Builder",
