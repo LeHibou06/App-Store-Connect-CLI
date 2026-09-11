@@ -3,8 +3,11 @@ package web
 import (
 	"context"
 	"encoding/json"
+	"errors"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/rudrankriyam/App-Store-Connect-CLI/internal/handlertest"
@@ -12,6 +15,57 @@ import (
 
 // Captured from Apple's public production ASC login configuration on 2026-09-11.
 const testPublicASCWidgetKey = "e0b80c3bf78523bfe80974d320935bfa30add02e1bff88ec2166c6bd5a706c42"
+
+func TestLoginAuthServiceKeyFailureGuidance(t *testing.T) {
+	transportErr := errors.New("fixture transport failure")
+	tests := []struct {
+		name   string
+		status int
+		body   string
+		cause  error
+	}{
+		{name: "forbidden", status: http.StatusForbidden, body: `{}`},
+		{name: "server failure", status: http.StatusInternalServerError, body: `{}`},
+		{name: "invalid JSON", status: http.StatusOK, body: `<html>Unavailable</html>`},
+		{name: "transport failure", cause: transportErr},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			fixture := handlertest.New(t)
+			var requests int
+			client := &http.Client{Transport: roundTripFunc(func(req *http.Request) (*http.Response, error) {
+				requests++
+				if req.Method != http.MethodGet || req.URL.Host != "appstoreconnect.apple.com" || req.URL.Path != "/olympus/v1/app/config" {
+					return nil, fixture.Errorf("unexpected request after bootstrap failure: %s %s", req.Method, req.URL)
+				}
+				if tt.cause != nil {
+					return nil, tt.cause
+				}
+				return &http.Response{StatusCode: tt.status, Header: make(http.Header), Body: io.NopCloser(strings.NewReader(tt.body)), Request: req}, nil
+			})}
+			session, err := loginWithHTTPClient(context.Background(), client, LoginCredentials{
+				Username: "fixture@example.invalid", Password: "fixture-password",
+			})
+			if err == nil || session != nil {
+				t.Fatal("expected bootstrap failure without a session")
+			}
+			const guidance = "could not load Apple login configuration; password authentication has not started. Run with --api-debug for request details: "
+			if !strings.HasPrefix(err.Error(), guidance) {
+				t.Errorf("missing pre-authentication diagnostic guidance: %v", err)
+			}
+			cause := errors.Unwrap(err)
+			if cause == nil || strings.TrimPrefix(err.Error(), guidance) != cause.Error() {
+				t.Errorf("bootstrap error must preserve its wrapped cause: %v", err)
+			}
+			if tt.cause != nil && !errors.Is(err, tt.cause) {
+				t.Errorf("bootstrap error must wrap the transport failure: %v", err)
+			}
+			if requests != 1 {
+				t.Errorf("requests = %d, want only the bootstrap request", requests)
+			}
+		})
+	}
+}
 
 func TestGetAuthServiceKey(t *testing.T) {
 	tests := []struct {

@@ -615,7 +615,7 @@ func loginWithHTTPClient(ctx context.Context, client *http.Client, creds LoginCr
 
 	serviceKey, err := getAuthServiceKey(ctx, client)
 	if err != nil {
-		return nil, fmt.Errorf("failed to get auth service key: %w", err)
+		return nil, fmt.Errorf("could not load Apple login configuration; password authentication has not started. Run with --api-debug for request details: %w", err)
 	}
 
 	if err := performSRPLogin(ctx, client, creds, serviceKey); err != nil {
